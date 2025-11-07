@@ -1,0 +1,524 @@
+/* Globals */
+html{
+    font-family: Arial, Helvetica, sans-serif;
+}
+body{
+    margin: 0; 
+    padding: 0; 
+    background-color: #0d1217;
+}
+
+/* Main Containers */
+#page{
+    display: flex;
+    flex-direction: column;
+    margin-left: auto; 
+    margin-right: auto;
+    width: 85%;
+}
+.bodyContainer{
+    display: flex;
+    margin: 0px auto; 
+    justify-content: center;
+    width: 100%; 
+    padding-top: 40px; 
+    padding-bottom: 80px;
+    border-radius: 0px 0px 12px 12px;
+    gap: 30px; 
+    border: 2px #1f242e solid;
+    border-top: none;
+    
+}
+div.pageTitle{
+    display: flex;
+    justify-content: center;
+    gap: 30px; 
+    align-items: center;
+    width: 100%; 
+    margin-top: 20px;
+    border-radius: 12px 12px 0px 0px;
+    margin-left: auto; 
+    margin-right: auto;
+    background-color: #161b22; 
+    border: 2px #1f242e solid; 
+    border-bottom: none;
+    padding: 12px 0px 12px 0px;
+    box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),   
+    inset 0 -1px 0 rgba(0,0,0,0.35);
+}
+#spartanLogo{
+    width: 115px; 
+    height: 110px; 
+}
+/* Main Body Containers */ 
+#title{
+    color:white; 
+    font-family: Arial, Helvetica, sans-serif;
+}
+.vertical{
+    display: flex;
+    flex-direction: column; 
+    gap: 30px;
+    height: 489px; 
+    width: 35%; 
+}
+.macro-title{
+    position: absolute;
+    left: 50%; 
+    transform: translate(-50%);
+}
+#calorie-container, #macro-container, #meal-container{
+    background-color: #161b22;
+    border-radius: 12px;
+     box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),   
+    inset 0 -1px 0 rgba(0,0,0,0.35);               
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+#calorie-container{
+    width: 100%;
+    height: 200px;  
+}
+.calorie-ratio{
+    display: flex; 
+    flex-direction: column;
+    margin-top: -25px;
+}
+#macro-container{
+    width: 100%;
+    height: 380px; 
+    position: relative;
+}
+#meal-container{
+    padding-top: 10px;
+    width: 55%;
+    height: 480px; 
+    position: relative;
+    overflow: scroll;
+}
+.button{
+    width: 100%;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+h3.title{
+    text-align: left;
+    padding: 15px 30px;
+    font-size: 23px; 
+    color: #898e96;
+}
+h2.no-meals{
+    text-align: center;
+    position: relative;
+    top: 15%; 
+    color: #898e96;
+}
+hr{
+    margin-top: -15px; 
+    height: 2px; 
+    border: none; 
+    background-color: #898e9613; 
+}
+.title, .calories, .ratio{
+    font-family: Arial, Helvetica, sans-serif; 
+    text-align: center;
+}
+.title{
+    font-weight: normal;
+}
+.title, .calories{
+    color: white;
+}
+.calories{
+    font-size: 50px; 
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+.ratio{
+    color: white; 
+    letter-spacing: 1px;
+}
+#addMealBtn{
+    position: absolute;
+    right: 120px; 
+    bottom: 10px;
+    transform: translate(10%, -55%);
+    background-color: #1c232a;
+    border-radius: 8px;
+    color: white;
+    font-size: 18px; 
+    border: none; 
+    padding: 12px 20px; 
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.meal-container-button{
+    display: flex; 
+    flex-direction: column;
+}
+#addMealBtn:hover{
+    background-color: rgba(20, 23, 26, 0.404);
+}
+#addMealBtn:active{
+    background-color: white;
+    color: #1c232a;
+}
+.ratio{
+    position: relative; 
+    bottom: 40px; 
+    font-size: 18px;
+    font-weight: normal;
+}
+.color{
+    color: #51a362;
+    font-weight: normal;
+    padding-right: 8px;
+}
+
+/* Macro Progress Bars */ 
+.progress-container{
+    display: flex; 
+    flex-direction: row;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+.progress{
+    position: relative;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+    width: 30%; 
+    height: 100%; 
+}
+.circle-background,
+.circle-progress {
+    fill: none;  /* Inside of circle won't be filled, only outside */
+    stroke-width: 10; /* Sets width for the stroke coloe (outer ring) */
+    stroke-linecap: round; /* Sets the shape of the stroke (circular)*/
+}
+.circle-progress {
+    stroke: #51a362;
+    stroke-dasharray: 339.292; 
+    stroke-dashoffset: 339.292;
+    transition: stroke-dashoffset 0.5s ease;
+}
+.circle-background{
+    stroke: #242a31; 
+}
+.percentage{
+    font-size: 18px; 
+    font-weight: bold; 
+    fill: white; 
+}
+.macro-info{
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -10px;
+    gap: 2px;
+    color: white;
+}
+.grams{
+    font-size: 13px; 
+}
+/* Modal Styles */
+.modal-container{
+    opacity: 0;
+    background-color: #161b21;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.7), 
+              0 0 8px rgba(0,0,0,0.5);
+    position: absolute;
+    width: 30%;
+    left: 50%; 
+    top: 50%;
+    height: 600px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 20;
+    border-radius: 12px;
+    min-width: 550px;
+}
+
+.modal-container.active{
+    opacity: 1;
+    pointer-events: all;
+}
+.overlay.active{
+    display: block; 
+}
+.overlay{
+    position: fixed;
+    top: 0; 
+    left: 0;
+    height: 100%; 
+    width: 100%; 
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.459);
+    display: none;
+}
+.modal-head{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal-head h1{
+    color: white;
+    text-align: center;
+    width: 100%; 
+    justify-content: center;
+    width: 33%;
+}
+.modal-head .filler{
+    width: 33%;
+}
+.modal-head .X{
+    color: white;
+    font-size: 3rem;
+    margin-right: 10px;
+    cursor: pointer;
+    text-align: right;
+    width: 33%; 
+}
+.X:hover{
+    color: rgba(255, 255, 255, 0.04);
+}
+.food-items{
+    width: 90%; 
+    margin-left: auto;
+    margin-right: auto;
+    height: 375px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+.food-items .row{
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    background-color: #181d23;
+    border-radius: 8px; 
+    list-style-type: none;
+    padding: 10px 15px;
+    margin: 3px 0px; 
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.6), 
+              inset 0 -1px 1px rgba(255,255,255,0.05);
+    border: none;
+    cursor: pointer;
+}
+#hidden{
+    display: none;
+}
+.row:hover{
+    background-color: #0c0e11;
+}
+.row:active{
+    background-color: #262d36;
+}
+.info{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 15px;
+}
+.food-items p{
+    color: white;
+}
+.modal-bottom{ 
+    margin-bottom: -20px;
+    width: 90%;
+    margin: 0px auto;  
+    text-align: center;  
+    display: flex;
+}
+.modal-bottom #search-food{
+    width: 65%;
+    text-align: left;
+}
+.modal-bottom #quantity{
+    width: 5%;
+    text-align: right;
+}
+.modal-bottom input, .modal-bottom select{
+    background-color:#181d23; 
+    border: none; 
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.6), 
+              inset 0 -1px 1px rgba(255,255,255,0.05);
+}
+.modal-bottom input:focus, .modal-bottom select:focus{
+    outline: none; 
+    border: 1px solid #51a362; 
+}
+.modal-bottom form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    width: 90%; 
+    margin: 15px auto;
+}
+.modal-bottom #meal{
+    width: 65%;
+}
+.modal-bottom #submitBtn{
+    width: 20%;
+    margin-left: 5px; 
+    color: white; 
+}
+.modal-bottom label{
+    color: white;
+    margin-right: 8px;
+}
+.modal-bottom select{
+    color: white;
+}
+input[type="text"], input[type="number"]{
+    color: white;
+}
+.meal{
+    margin-left: 20px;
+    color: #898e96;
+}
+.divider{
+    content: "";
+    text-align: center; 
+    display: block;
+    width: 100%;
+    height: 2px; 
+    background-color: rgba(137, 142, 150, 1);
+}
+.food-display{
+    display: flex;
+    background-color: #51a362;
+}
+h3.food-name{
+    color: white; 
+    margin-left: 40px;
+}
+.food-display-list{
+    color: white; 
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-end;
+    width: 95%;
+    margin-right: 100px;
+    gap: 25px;
+}
+.food-display-list li{
+    font-size: 20px;
+}
+.day{
+    height: 40px;
+    margin-bottom: -25px;
+}
+#date{
+    border: none; 
+    padding: 5px;
+    background-color: #0d1217;
+    color: #898e96;
+    font-size: 25px;
+}
+#date:active{
+    font-size: 16px;
+    border-color: #161b22;
+}
+.meal-name{
+    color: #898e96; 
+    font-size: 20px; 
+    margin-left: 10px;
+}
+.meal{
+    display: flex; 
+    flex-direction: column;
+    margin-left: 10px;
+    margin-top: -15px;
+}
+.stats{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 20px;
+    margin-right: 20px;
+}
+.food-name{
+    color: white; 
+    font-size: 20px; 
+}
+.stats{
+    color: white; 
+    font-size: 16px;
+}
+.meal-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+/* Responsive Design */ 
+@media (max-width: 1500px){
+    #page{
+        width: 92%;
+    }
+    .title{
+        font-size: 22px; 
+    }
+}
+@media (max-width: 1000px){
+    #page{
+        width: 92%;
+        margin-bottom: 25px; 
+    }
+    .title{
+        font-size: 22px; 
+    }
+    div.pageTitle{
+        margin-top: 50px; 
+    }
+    .vertical{
+        display:flex;
+        margin-left: auto; 
+        margin-right: auto; 
+        width: 92%;  
+        gap: 20px;
+    }
+    .progress{ 
+        margin-top: 20px; 
+    }
+    .bodyContainer{
+        display: flex;
+        flex-direction: column-reverse;
+        padding-bottom: 115px;
+    }
+    #calorie-container{
+        margin-top: 10px;
+    }
+    #macro-container{
+        padding-bottom: 20px;
+    }
+    #meal-container{
+        width: 92%;
+        margin-left: auto;
+        margin-right: auto; 
+        margin-bottom: 55px; 
+    }
+    #addMealBtn{
+        transform: translate(32%, 10%); 
+    }
+}
+@media(max-width:700px){
+    #addMealBtn{
+        transform: translate(50%, 10%); 
+    }
+}
+@media(max-width:500px){
+    #addMealBtn{
+        transform: translate(65%, 10%); 
+    }
+}
