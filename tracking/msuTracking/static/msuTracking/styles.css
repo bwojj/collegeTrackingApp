@@ -18,6 +18,7 @@ body{
 }
 .bodyContainer{
     display: flex;
+    position: relative;
     margin: 0px auto; 
     justify-content: center;
     width: 100%; 
@@ -91,9 +92,9 @@ div.pageTitle{
     position: relative;
 }
 #meal-container{
-    padding-top: 10px;
+    padding-top: 0px;
     width: 55%;
-    height: 480px; 
+    height: 490px; 
     position: relative;
     overflow: scroll;
 }
@@ -142,9 +143,8 @@ hr{
 }
 #addMealBtn{
     position: absolute;
-    right: 120px; 
-    bottom: 10px;
-    transform: translate(10%, -55%);
+    right: 4rem; 
+    bottom: 1rem; 
     background-color: #1c232a;
     border-radius: 8px;
     color: white;
@@ -204,8 +204,8 @@ hr{
 }
 .circle-progress {
     stroke: #51a362;
-    stroke-dasharray: 339.292; 
-    stroke-dashoffset: 339.292;
+    stroke-dasharray: 188.5; 
+    stroke-dashoffset: 188.5;
     transition: stroke-dashoffset 0.5s ease;
 }
 .circle-background{
@@ -221,7 +221,7 @@ hr{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: -10px;
+    margin-top: -15px;
     gap: 2px;
     color: white;
 }
@@ -430,9 +430,27 @@ h3.food-name{
     border-color: #161b22;
 }
 .meal-name{
-    color: #898e96; 
+    color: #51a361b0; 
     font-size: 20px; 
     margin-left: 10px;
+}
+.meal-info{
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+}
+.totals{
+    display: flex;
+    gap: 15px;
+    margin-right: 14px;
+    color:#51a362;
+}
+.total{
+    color: #51a362; 
+    font-size: 18px;
+}
+hr{
+    background-color: #51a36146;
 }
 .meal{
     display: flex; 
@@ -460,6 +478,7 @@ h3.food-name{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: -20px;
 }
 /* Responsive Design */ 
 @media (max-width: 1500px){
@@ -509,16 +528,8 @@ h3.food-name{
         margin-bottom: 55px; 
     }
     #addMealBtn{
-        transform: translate(32%, 10%); 
-    }
-}
-@media(max-width:700px){
-    #addMealBtn{
-        transform: translate(50%, 10%); 
-    }
-}
-@media(max-width:500px){
-    #addMealBtn{
-        transform: translate(65%, 10%); 
+        position: absolute; 
+        bottom: 52%;
+        right: 2rem;
     }
 }

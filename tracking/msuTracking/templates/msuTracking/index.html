@@ -1,4 +1,4 @@
-{% extends 'msuTracking/layout.html' %}
+rack{% extends 'msuTracking/layout.html' %}
 {% load static %}
 
 {% block body %}
@@ -11,17 +11,29 @@
             <div class="vertical">
                 <form class="day" action="{% url 'index' %}" method="get">
                     <select id="date" name="date" onchange="this.form.submit()">
+                        {% if day == todaysDate %}
                         <option selected>Today</option>
+
+                        {% else %}
+                        <option selected>{{ day }}</option>
+                        {% endif %}
+
                         {% for date in dates %}
-                            <option value="{{ date|date:'Y-m-d' }}">{{ date }}</option>
+                            {% if date != day %}
+                                {% if date == todaysDate %}
+                                    <option value="{{ date }}">Today</option>
+                                {% else %}
+                                    <option value="{{ date }}">{{ date }}</option>
+                                {% endif %}
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </form>
                 <div id="calorie-container">
                     <h2 class="title">Total Calories</h2>
                     <div class="calorie-ratio">
-                        <h1 class="calories"><strong class="color">2500</strong></h1>
-                        <h2 class="ratio">2500 / 3500</h2>
+                        <h1 class="calories"><strong class="color">{{ total_calories }}</strong></h1>
+                        <h2 class="ratio">{{ total_calories }} / 3000</h2>
                     </div>
                 </div>
                 <div id="macro-container">
@@ -30,48 +42,48 @@
                         <div class="progress">
                             <svg class="circle" viewBox="0 0 120 120">
                                 <circle class="circle-background" cx="60"
-                                cy="60" r="35"/>
-                                <circle class="circle-progress" cx="60"
-                                cy="60" r="35"/>
-                                <text class="percentage" x="50%" y="50%"
+                                cy="60" r="30"/>
+                                <circle class="circle-progress" id="protein" cx="60"
+                                cy="60" r="30"/>
+                                <text class="percentage" id="proteinPercentage" x="50%" y="50%"
                                  text-anchor="middle"dominant-baseline="middle">
                                  0%</text>      
                             </svg>
                             <!-- <span class="percentage">0%</span> -->
                             <div class="macro-info">
                                 <span class="macro-name">Protein</span>
-                                <span class="grams">25g</span>
+                                <span class="grams" id="proteinG" >{{ total_protein }}g</span>
                             </div>
                         </div>
                         <div class="progress">
                             <svg class="circle" viewBox="0 0 120 120">
                                 <circle class="circle-background" cx="60"
-                                cy="60" r="35"/>
-                                <circle class="circle-progress" cx="60"
-                                cy="60" r="35"/>
-                                <text class="percentage" x="50%" y="50%"
+                                cy="60" r="30"/>
+                                <circle class="circle-progress" id="carbs" cx="60"
+                                cy="60" r="30"/>
+                                <text class="percentage" id="carbPercentage" x="50%" y="50%"
                                  text-anchor="middle"dominant-baseline="middle">
                                  0%</text>      
                             </svg>
                             <div class="macro-info">
                                 <span class="macro-name">Carbs</span>
-                                <span class="grams">25g</span>
+                                <span class="grams" id="carbsG">{{ total_carbs }}g</span>
                             </div>
                         </div>
                         <div class="progress">
                             <svg class="circle" viewBox="0 0 120 120">
                                 <circle class="circle-background" cx="60"
-                                cy="60" r="35"/>
-                                <circle class="circle-progress" cx="60"
-                                cy="60" r="35"/>
-                                <text class="percentage" x="50%" y="50%"
+                                cy="60" r="30"/>
+                                <circle class="circle-progress" id="fat" cx="60"
+                                cy="60" r="30"/>
+                                <text class="percentage" id="fatPercentage" x="50%" y="50%"
                                  text-anchor="middle"dominant-baseline="middle">
                                  0%</text>                         
                             </svg>
                             <!-- <span class="percentage">0%</span> -->
                             <div class="macro-info">
                                 <span class="macro-name">Fat</span>
-                                <span class="grams">25g</span>
+                                <span class="grams" id="fatG">{{ total_fat }}g</span>
                             </div>
                         </div>
                     </div>
@@ -79,8 +91,20 @@
             </div>
             <div id="meal-container">
                 {% for meal in meals %}
-                        <p class="meal-name">{{ meal.meal_name }}</p>
-                        <hr>
+                        <div class="meal-info">
+                            <p class="meal-name">{{ meal.meal_name }}</p>
+                            <div class="totals">
+                                {% for name, total in totals.items %}
+                                    {% if name == meal.meal_name %}
+                                        <p class="total">{{ total.0 }} Cals</p>
+                                        <p class="total">{{ total.1 }}P</p>
+                                        <p class="total">{{ total.2 }}C</p>
+                                        <p class="total">{{ total.3 }}F</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <hr style="margin-bottom: 20px;">
                         <div class="meal">
                             {% for item in meal.item.all %}
                                 <div class="meal-item">

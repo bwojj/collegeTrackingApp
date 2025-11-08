@@ -45,6 +45,9 @@ def index(request):
             return redirect('index')
     
     selected_date = request.GET.get("date", datetime.date.today())
+    if selected_date == datetime.date.today():
+        selected_date = selected_date.strftime("%Y-%m-%d")
+    
     try:
         day = Day.objects.get(date=selected_date)
         meals = (
@@ -60,8 +63,41 @@ def index(request):
             .prefetch_related("item")
             .order_by("meal_name")
         )
+    included_dates = Day.objects.values_list('date', flat=True)
+    print(included_dates)
+    
+    dates = set([d.strftime("%Y-%m-%d") for d in included_dates])
+
+    meal_totals = dict()
+    for meal in meals:
+        total_calories, total_protein, total_carbs, total_fat = 0, 0, 0, 0
+        for item in meal.item.all():
+            total_calories += item.calories
+            total_protein += item.protein 
+            total_carbs += item.carbs 
+            total_fat += item.fat
+
+        meal_totals[meal.meal_name] = [total_calories, total_protein, total_carbs, total_fat]
+    
+    total_calories, total_protein, total_carbs, total_fat = 0, 0, 0, 0 
+
+    if meal_totals:
+        for meal, totals in meal_totals.items():
+            total_calories += totals[0]
+            total_protein += totals[1]
+            total_carbs += totals[2]
+            total_fat += totals[3]
+    
 
     return render(request, "msuTracking/index.html", {
         "foodInfo": get_foods().items(), 
         "meals": meals,
+        "dates": dates, 
+        "todaysDate": datetime.date.today().strftime("%Y-%m-%d"),
+        "day": selected_date,
+        "totals": meal_totals,
+        "total_calories": total_calories,
+        "total_protein": total_protein, 
+        "total_carbs": total_carbs, 
+        "total_fat": total_fat, 
     }) 
