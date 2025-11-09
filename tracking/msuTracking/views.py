@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django import forms
 from django.shortcuts import redirect
 from foodData import get_foods, foodInfo
@@ -11,8 +13,8 @@ class NewFoodAdd(forms.Form):
     quantity = forms.IntegerField(label="Weight")
     meal = forms.CharField(max_length=64, label="MealName")
 
-
 # Create your views here.
+@login_required
 def index(request):
     if request.method == "POST":
         form = NewFoodAdd(request.POST)
@@ -21,10 +23,13 @@ def index(request):
             food = form.cleaned_data["food"]
             quantity = form.cleaned_data["quantity"]
             meal_name = form.cleaned_data["meal"]
+            user = request.user 
 
             food_nutrition = {key: int(value) * quantity for key, value in foodInfo(food).items()}
-            
-            date = Day.objects.get(date=datetime.date.today())
+            try: 
+                date = Day.objects.get(date=datetime.date.today())
+            except Day.DoesNotExist:
+                date = Day(date=datetime.date.today())
             try: 
                 meal = Meal.objects.get(date=date, meal_name=meal_name)
             except Meal.DoesNotExist:
@@ -44,9 +49,10 @@ def index(request):
 
             return redirect('index')
     
-    selected_date = request.GET.get("date", datetime.date.today())
-    if selected_date == datetime.date.today():
-        selected_date = selected_date.strftime("%Y-%m-%d")
+    if request.GET.get("date"):
+        selected_date = request.GET.get("date")
+    else:
+        selected_date = datetime.date.today().strftime("%Y-%m-%d")
     
     try:
         day = Day.objects.get(date=selected_date)
@@ -101,3 +107,16 @@ def index(request):
         "total_carbs": total_carbs, 
         "total_fat": total_fat, 
     }) 
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'msuTracking/signup.html')
+
+def login(request):
+    return render(request, 'msuTracking/login.html')

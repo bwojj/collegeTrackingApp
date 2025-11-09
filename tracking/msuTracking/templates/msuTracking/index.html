@@ -12,7 +12,7 @@ rack{% extends 'msuTracking/layout.html' %}
                 <form class="day" action="{% url 'index' %}" method="get">
                     <select id="date" name="date" onchange="this.form.submit()">
                         {% if day == todaysDate %}
-                        <option selected>Today</option>
+                        <option selected value="{{ todaysDate }}">Today</option>
 
                         {% else %}
                         <option selected>{{ day }}</option>

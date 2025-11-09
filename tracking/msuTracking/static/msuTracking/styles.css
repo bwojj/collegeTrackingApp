@@ -480,7 +480,83 @@ hr{
     align-items: center;
     margin-bottom: -20px;
 }
+
+.signup{
+    margin-left: auto; 
+    margin-right: auto;
+    margin-top: 10%;
+    height: 400px; 
+    width: 25%;
+    background-color: #161b22;
+    border-radius: 12px;
+    box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),   
+    inset 0 -1px 0 rgba(0,0,0,0.35);               
+     transition: box-shadow .25s ease, transform .25s ease;
+}
+.signup form{
+    display: flex;
+    margin-top: 70px;
+    flex-direction: column;
+    gap: 10px;
+}
+.signup form input{
+    width: 60%; 
+    margin-left: auto; 
+    margin-right: auto;
+    background-color: #262d36;
+    border-radius: 8px;
+    border: none;
+    height: 45px;
+    box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),   
+    inset 0 -1px 0 rgba(0,0,0,0.35);               
+     transition: box-shadow .25s ease, transform .25s ease;
+}
+.signup form input[type="text"], .signup form input[type="password"]{
+    background-color: #262d36;
+    color: white;
+    padding-left: 8px;
+}
+input:focus{
+    outline: none;
+}
+.signup-title{
+    position: relative; 
+    top: 40px;
+    text-align: center;
+    color: #51a362;
+}
+#signupSubmit{
+    margin-top: 25px;
+    background-color: #51a362;
+    color: white;
+}
+#signupSubmit:hover{
+    cursor: pointer;
+    background-color: #51a36165;
+}
+#signupSubmit:active{
+    background-color: #51a362;
+}
 /* Responsive Design */ 
+@media (max-width: 1000px){
+    .signup{
+        width: 40%;
+    }
+}
+@media (max-width: 700px){
+    .signup{
+        width: 50%;
+        margin-top: 20%;
+    }
+}
+@media (max-width: 500px){
+    .signup{
+        width: 70%;
+        margin-top: 15%;
+    }
+}
 @media (max-width: 1500px){
     #page{
         width: 92%;
