@@ -4,10 +4,15 @@ rack{% extends 'msuTracking/layout.html' %}
 {% block body %}
     <div id="page">
         <div class="pageTitle">
-            <img id="spartanLogo" src="{% static 'msuTracking/msuWhite1.png' %}" alt="msuLogo">
-            <h1 id="title">MSUtrition</h1>
-            <a href="{% url 'signup' %}">Sign-Up</a>
-            <a href="{% url 'login' %}">Log-In</a>
+            <div style="width: 5%;"></div>
+            <div class="logo-title">
+                <img id="spartanLogo" src="{% static 'msuTracking/msuWhite1.png' %}" alt="msuLogo">
+                <h1 id="title">MSUtrition</h1>
+            </div>
+            <div class="links">
+                <a href="{% url 'signup' %}">Sign-Up</a>
+                <a href="{% url 'logout' %}">Log-Out</a>
+            </div>
         </div>
         <div class="bodyContainer">
             <div class="vertical">

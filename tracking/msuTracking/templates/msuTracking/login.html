@@ -8,6 +8,9 @@
             <input type="text" name="username" placeholder="Username">
             <input type="password" name="password" placeholder="Password">
             <input id="signupSubmit" type="submit" value="Submit">
+            {% if form.errors %}
+                <p class="error">{{ form.non_field_errors.0 }}</p>
+            {% endif %}
         </form>
     </div>
 {% endblock %}

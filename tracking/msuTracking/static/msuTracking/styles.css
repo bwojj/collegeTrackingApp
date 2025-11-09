@@ -32,14 +32,12 @@ body{
 }
 div.pageTitle{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 30px; 
     align-items: center;
     width: 100%; 
     margin-top: 20px;
     border-radius: 12px 12px 0px 0px;
-    margin-left: auto; 
-    margin-right: auto;
     background-color: #161b22; 
     border: 2px #1f242e solid; 
     border-bottom: none;
@@ -51,11 +49,26 @@ div.pageTitle{
 #spartanLogo{
     width: 115px; 
     height: 110px; 
+    margin-left: 35px;
+}
+.logo-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.error{
+    font-size: 12px; 
+    margin-left: auto; 
+    margin-right: auto; 
+    color: red; 
+    width: 50%;
 }
 /* Main Body Containers */ 
 #title{
     color:white; 
     font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
 }
 .vertical{
     display: flex;
@@ -237,7 +250,7 @@ hr{
     position: absolute;
     width: 30%;
     left: 50%; 
-    top: 50%;
+    top: 35%;
     height: 600px;
     transform: translate(-50%, -50%);
     pointer-events: none;
@@ -342,7 +355,7 @@ hr{
     text-align: left;
 }
 .modal-bottom #quantity{
-    width: 5%;
+    width: 15%;
     text-align: right;
 }
 .modal-bottom input, .modal-bottom select{
@@ -381,6 +394,16 @@ hr{
 }
 input[type="text"], input[type="number"]{
     color: white;
+}
+input[type="number"]{
+    padding-right: 30px;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 .meal{
     margin-left: 20px;
@@ -541,6 +564,25 @@ select:focus{
 }
 #signupSubmit:active{
     background-color: #51a362;
+}
+.links{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 5px;
+    text-align: center;
+}
+.links a{
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    margin-right: 35px;
+}
+.links a:hover{
+    color: rgba(255, 255, 255, 0.318); 
+}
+.links a:active{
+    color: white; 
 }
 /* Responsive Design */ 
 @media (max-width: 1000px){

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from django import forms
 from django.shortcuts import redirect
 from foodData import get_foods, foodInfo
@@ -119,3 +120,10 @@ def signup(request):
 
 def login(request):
     return render(request, 'msuTracking/login.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
+def delete_data(request): 
+    pass 
