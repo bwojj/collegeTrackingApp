@@ -1,0 +1,13 @@
+{% extends 'msuTracking/layout.html' %}
+
+{% block body %}
+    <div class="signup">
+        <h1 class="signup-title">Log In</h1>
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <input id="signupSubmit" type="submit" value="Submit">
+        </form>
+    </div>
+{% endblock %}
