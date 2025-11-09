@@ -5,7 +5,12 @@ from django.contrib.auth.models import User
 
 class Day(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='days', default=1)
-    date = models.DateField(unique=True)
+    date = models.DateField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'date'], name='unique_day_per_user')
+        ]
 
 class Meal(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='meals', default=1)

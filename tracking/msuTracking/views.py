@@ -27,13 +27,12 @@ def index(request):
 
             food_nutrition = {key: int(value) * quantity for key, value in foodInfo(food).items()}
             try: 
-                date = Day.objects.get(date=datetime.date.today())
+                date = Day.objects.get(date=datetime.date.today(), user=request.user)
             except Day.DoesNotExist:
-                date = Day(date=datetime.date.today())
-            try: 
-                meal = Meal.objects.get(date=date, meal_name=meal_name)
-            except Meal.DoesNotExist:
-                meal = Meal(date=date, meal_name=meal_name)
+                date = Day(date=datetime.date.today(), user=request.user)
+                date.save()
+
+            meal, created = Meal.objects.get_or_create(date=date, meal_name=meal_name, user=request.user)
             food_item = FoodData(
                 meal=meal,
                 food_name=food,
@@ -55,14 +54,14 @@ def index(request):
         selected_date = datetime.date.today().strftime("%Y-%m-%d")
     
     try:
-        day = Day.objects.get(date=selected_date)
+        day = Day.objects.get(date=selected_date, user=request.user)
         meals = (
             day.meals.all()
             .prefetch_related("item")
             .order_by("meal_name")
         )
     except Day.DoesNotExist:
-        day = Day(date=selected_date)
+        day = Day(date=selected_date, user=request.user)
         day.save()
         meals = (
             day.meals.all()

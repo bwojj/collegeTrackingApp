@@ -6,6 +6,8 @@ rack{% extends 'msuTracking/layout.html' %}
         <div class="pageTitle">
             <img id="spartanLogo" src="{% static 'msuTracking/msuWhite1.png' %}" alt="msuLogo">
             <h1 id="title">MSUtrition</h1>
+            <a href="{% url 'signup' %}">Sign-Up</a>
+            <a href="{% url 'login' %}">Log-In</a>
         </div>
         <div class="bodyContainer">
             <div class="vertical">
