@@ -1,4 +1,4 @@
-rack{% extends 'msuTracking/layout.html' %}
+{% extends 'msuTracking/layout.html' %}
 {% load static %}
 
 {% block body %}
@@ -10,7 +10,6 @@ rack{% extends 'msuTracking/layout.html' %}
                 <h1 id="title">MSUtrition</h1>
             </div>
             <div class="links">
-                <a href="{% url 'signup' %}">Sign-Up</a>
                 <a href="{% url 'logout' %}">Log-Out</a>
             </div>
         </div>
@@ -114,6 +113,7 @@ rack{% extends 'msuTracking/layout.html' %}
                         <hr style="margin-bottom: 20px;">
                         <div class="meal">
                             {% for item in meal.item.all %}
+                            <a class="del" href="{% url 'delete' item.id %}">
                                 <div class="meal-item">
                                     <p class="food-name">{{ item.food_name }}</p>
                                     <div class="stats">
@@ -123,9 +123,10 @@ rack{% extends 'msuTracking/layout.html' %}
                                         <p class="stat">{{ item.fat }}F</p>
                                     </div>
                                 </div>
+                                </a>
                                     <br>
                                 {% empty %}
-                                    <p style="font-size: 20px; color: #51a362;">No Foods</p>
+                                    <p class="empty-placeholder">No Foods</p>
                             {% endfor %}
                         </div>
                 {% endfor %}
@@ -156,7 +157,7 @@ rack{% extends 'msuTracking/layout.html' %}
                         {% csrf_token %}
                         <div class="form-top">
                             <input type="text" name="food" id="search-food" placeholder="Food">
-                            <label for="quantity">Quantity</label>
+                            <label for="quantity">Weight</label>
                             <input id="quantity" type="number" name="quantity" placeholder="#">
                         </div>
                         <div class="form-under">
@@ -164,6 +165,7 @@ rack{% extends 'msuTracking/layout.html' %}
                             <select id="meal" name="meal">
                                 <option name="Breakfast">Breakfast</option>
                                 <option name="Lunch">Lunch</option>
+                                <option name="Lunch">Pre-Lift</option>
                                 <option name="Dinner">Dinner</option>
                             </select>
                             <input id="submitBtn" type="submit" name="submit" value="Add">

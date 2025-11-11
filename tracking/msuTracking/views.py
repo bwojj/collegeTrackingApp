@@ -5,6 +5,7 @@ from django.contrib.auth import logout
 from django import forms
 from django.shortcuts import redirect
 from foodData import get_foods, foodInfo
+from django.db.models import Case, When, Value, IntegerField
 import datetime 
 
 from .models import Meal, FoodData, Day
@@ -59,7 +60,17 @@ def index(request):
         meals = (
             day.meals.all()
             .prefetch_related("item")
-            .order_by("meal_name")
+            .annotate(
+                order=Case(
+                    When(meal_name="Breakfast", then=Value(1)),
+                    When(meal_name="Lunch", then=Value(2)),
+                    When(meal_name="Pre-Lift", then=Value(3)),
+                    When(meal_name="Dinner", then=Value(4)),
+                    default=Value(5),
+                    output_field=IntegerField(),
+                )
+            )
+            .order_by("order")
         )
     except Day.DoesNotExist:
         day = Day(date=selected_date, user=request.user)
@@ -67,7 +78,17 @@ def index(request):
         meals = (
             day.meals.all()
             .prefetch_related("item")
-            .order_by("meal_name")
+            .annotate(
+                order=Case(
+                    When(meal_name="Breakfast", then=Value(1)),
+                    When(meal_name="Lunch", then=Value(2)),
+                    When(meal_name="Pre-Lift", then=Value(3)),
+                    When(meal_name="Dinner", then=Value(4)),
+                    default=Value(5),
+                    output_field=IntegerField(),
+                )
+            )
+            .order_by("order")
         )
     included_dates = Day.objects.values_list('date', flat=True)
     print(included_dates)
@@ -125,5 +146,12 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-def delete_data(request): 
-    pass 
+def delete_data(request, id): 
+    food = FoodData.objects.get(id=id)
+
+    date = food.meal.date.date
+
+    food.delete()
+    
+    
+    return redirect('index')
