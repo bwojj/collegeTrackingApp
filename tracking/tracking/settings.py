@@ -43,6 +43,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # WhiteNoise serves collected static assets directly, avoiding an external CDN.
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -120,7 +122,16 @@ LOGOUT_REDIRECT_URL = '/login/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# WhiteNoise needs an absolute static URL so the CDN-safe paths are generated correctly.
+STATIC_URL = '/static/'
+# All collected static files are stored here so Render can serve them via WhiteNoise.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+# App-level static assets live here and are gathered during collectstatic.
+STATICFILES_DIRS = [
+    BASE_DIR / 'msuTracking' / 'static',
+]
+# Use WhiteNoise's hashed storage so browsers cache assets aggressively between deploys.
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
