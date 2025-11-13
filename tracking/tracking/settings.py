@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-j8@)@s27h3pxo_gv3mc_wc&5ge+okw8za)805((oczmow6%ql9
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'msu-nutrition-tracking.onrender.com'
+    'msu-nutrition-tracking.onrender.com',
+    '127.0.0.1'
 ]
 
 # Application definition

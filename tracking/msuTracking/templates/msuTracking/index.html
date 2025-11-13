@@ -15,10 +15,11 @@
         </div>
         <div class="bodyContainer">
             <div class="vertical">
-                <form class="day" action="{% url 'index' %}" method="get">
+                <form class="day" data-today="{% if day == todaysDate %}true{% else %}false{% endif %}" action="{% url 'index' %}"action="{% url 'index' %}" method="get">
                     <select id="date" name="date" onchange="this.form.submit()">
                         {% if day == todaysDate %}
                         <option selected value="{{ todaysDate }}">Today</option>
+                    
 
                         {% else %}
                         <option selected>{{ day }}</option>
@@ -133,6 +134,37 @@
             </div>
                 <button id="addMealBtn" onclick="modalOpen()"><strong class="color">+</strong> Add Meal</button>
             <div class="overlay" onclick="modalClose()"></div>
+            <div class="fullOverlay" onclick="customModalClose()"></div>
+            <div class="modal-2">
+                <div class="modal-head modal-2-head">
+                    <div class="filler2"></div>
+                    <h2 class="modal-2-title">Custom Food</h2>
+                    <span class="X2" onclick="customModalClose()">&times</span>
+                </div>
+                <form action="{% url 'custom' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-2-top">
+                        <input type="text" name="food" placeholder="Name" autocomplete="off">
+                        <select id="meal" name="meal">
+                            <option name="Breakfast">Breakfast</option>
+                            <option name="Lunch">Lunch</option>
+                            <option name="Lunch">Pre-Lift</option>
+                            <option name="Dinner">Dinner</option>
+                        </select>
+                    </div>
+                    <div class="modal-2-bottom">
+                        <div class="modal-2-bottom-top">
+                            <input type="number" name="calories" placeholder="Cals" autocomplete="off">
+                            <input type="number" name="protein" placeholder="Protein" autocomplete="off">
+                            <input type="number" name="carbs" placeholder="Carbs" autocomplete="off">
+                            <input type="number" name="fat" placeholder="Fat" autocomplete="off">
+                        </div>
+                        <div class="bottom-button">
+                            <input type="submit" id="customButton" value="Add">
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="modal-container">
                 <div class="modal-head">
                     <div class="filler"></div>
@@ -140,6 +172,9 @@
                     <span class="X" onclick="modalClose()">&times</span>
                 </div>
                 <div class="food-items" id="food-list">
+                    <div class="row" id="custom-food" onclick="customModalOpen()">
+                        <p class="custom">Custom Food</p>
+                    </div>
                         {% for food, nutrition in foodInfo %}
                             <div class="row">
                                 <p style="color: #51a362;">{{ food }}</p>
@@ -156,9 +191,9 @@
                     <form action="{% url 'index' %}" method="post">
                         {% csrf_token %}
                         <div class="form-top">
-                            <input type="text" name="food" id="search-food" placeholder="Food">
+                            <input type="text" name="food" id="search-food" placeholder="Food" autocomplete="off">
                             <label for="quantity">Weight</label>
-                            <input id="quantity" type="number" name="quantity" placeholder="#">
+                            <input id="quantity" type="number" name="quantity" placeholder="#" autocomplete="off">
                         </div>
                         <div class="form-under">
                             <label for="meal">Meal</label>

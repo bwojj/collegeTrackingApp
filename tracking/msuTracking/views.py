@@ -6,6 +6,8 @@ from django import forms
 from django.shortcuts import redirect
 from foodData import get_foods, foodInfo
 from django.db.models import Case, When, Value, IntegerField
+from django.utils import timezone
+from django.urls import reverse
 import datetime 
 
 from .models import Meal, FoodData, Day
@@ -14,6 +16,19 @@ class NewFoodAdd(forms.Form):
     food = forms.CharField(max_length=64, label="FoodName")
     quantity = forms.IntegerField(label="Weight")
     meal = forms.CharField(max_length=64, label="MealName")
+
+class CustomFoodAdd(forms.Form):
+    food = forms.CharField(max_length=64, label="FoodName")
+    meal = forms.CharField(max_length=64, label="MealName")
+    calories = forms.IntegerField()
+    protein = forms.IntegerField()
+    carbs = forms.IntegerField()
+    fat = forms.IntegerField()
+
+def ensure_meals_exist(day, user):
+    default_meals = ["Breakfast", "Lunch", "Pre-Lift", "Dinner"]
+    for name in default_meals:
+        Meal.objects.get_or_create(date=day, meal_name=name, user=user)
 
 # Create your views here.
 @login_required
@@ -29,10 +44,13 @@ def index(request):
 
             food_nutrition = {key: int(value) * quantity for key, value in foodInfo(food).items()}
             try: 
-                date = Day.objects.get(date=datetime.date.today(), user=request.user)
+                date = Day.objects.get(date=timezone.localdate(), user=request.user)
+                ensure_meals_exist(date, request.user)
             except Day.DoesNotExist:
-                date = Day(date=datetime.date.today(), user=request.user)
+                date = Day(date=timezone.localdate(), user=request.user)
                 date.save()
+
+                ensure_meals_exist(date, request.user)
 
             meal, created = Meal.objects.get_or_create(date=date, meal_name=meal_name, user=request.user)
             food_item = FoodData(
@@ -53,10 +71,11 @@ def index(request):
     if request.GET.get("date"):
         selected_date = request.GET.get("date")
     else:
-        selected_date = datetime.date.today().strftime("%Y-%m-%d")
+        selected_date = timezone.localdate().strftime("%Y-%m-%d")
     
     try:
         day = Day.objects.get(date=selected_date, user=request.user)
+        ensure_meals_exist(day, request.user)
         meals = (
             day.meals.all()
             .prefetch_related("item")
@@ -75,6 +94,7 @@ def index(request):
     except Day.DoesNotExist:
         day = Day(date=selected_date, user=request.user)
         day.save()
+        ensure_meals_exist(day, request.user)
         meals = (
             day.meals.all()
             .prefetch_related("item")
@@ -91,9 +111,8 @@ def index(request):
             .order_by("order")
         )
     included_dates = Day.objects.values_list('date', flat=True)
-    print(included_dates)
     
-    dates = set([d.strftime("%Y-%m-%d") for d in included_dates])
+    dates = sorted(set([d.strftime("%Y-%m-%d") for d in included_dates]), reverse=True)
 
     meal_totals = dict()
     for meal in meals:
@@ -114,13 +133,14 @@ def index(request):
             total_protein += totals[1]
             total_carbs += totals[2]
             total_fat += totals[3]
+
     
 
     return render(request, "msuTracking/index.html", {
         "foodInfo": get_foods().items(), 
         "meals": meals,
         "dates": dates, 
-        "todaysDate": datetime.date.today().strftime("%Y-%m-%d"),
+        "todaysDate": timezone.localdate().strftime("%Y-%m-%d"),
         "day": selected_date,
         "totals": meal_totals,
         "total_calories": total_calories,
@@ -154,4 +174,32 @@ def delete_data(request, id):
     food.delete()
     
     
-    return redirect('index')
+    return redirect(reverse('index'))
+
+def custom(request):
+    if request.method == "POST":
+        form = CustomFoodAdd(request.POST)
+
+        if form.is_valid():
+            food_name = form.cleaned_data["food"]
+            meal_name = form.cleaned_data["meal"]
+            calories = form.cleaned_data["calories"]
+            protein = form.cleaned_data["protein"]
+            carbs = form.cleaned_data["carbs"]
+            fat = form.cleaned_data["fat"]
+
+            day, created = Day.objects.get_or_create(date=timezone.localdate().strftime("%Y-%m-%d"), user=request.user)
+            meal, created = Meal.objects.get_or_create(date=day, meal_name=meal_name, user=request.user)
+            food = FoodData(
+                meal=meal,
+                food_name=food_name,
+                calories=calories,
+                protein=protein,
+                carbs=carbs,
+                fat=fat,
+            )
+            food.save()
+
+            return redirect(reverse('index'))
+    
+    return redirect(reverse('index'))
