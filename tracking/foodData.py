@@ -23,12 +23,6 @@ foods = {
         "fat": 0,
         "carbs": 0,
     },
-    "Chicken (Bowl)": {
-        "calories": round(160 / 4),
-        "protein": round(26 / 4),
-        "fat": 0,
-        "carbs": 0,
-    },
     "Sabor Chicken": {
         "calories": round(125 / 3),
         "protein": round(14 / 3),
@@ -41,8 +35,7 @@ foods = {
         "fat": 0,
         "carbs": round(35 / 4),
     },
-    "Sabor Cheese": {
-        # 13 g serving ≈ 0.46 oz
+    "Shredded Cheese": {
         "calories": round(49 / 0.46),
         "protein": round(3 / 0.46),
         "fat": round(4 / 0.46),
@@ -72,7 +65,7 @@ foods = {
         "fat": 2,
         "carbs": 14,
     },
-    "Rice Cake": {
+    "Chocolate Rice Cakes": {
         "calories": 60,
         "protein": 0,
         "fat": 1,
@@ -89,6 +82,60 @@ foods = {
         "protein": 7,
         "fat": 15,
         "carbs": 17,
+    },
+    "Cheesecake": {
+        "calories": 100,
+        "protein": 2,
+        "fat": 7,
+        "carbs": 8,
+    },
+    "Brownie Cookie Dough Ice Cream": {
+        "calories": 67,
+        "protein": 1,
+        "fat": 3,
+        "carbs": 9,
+    },
+    "Vanilla Soft Serve": {
+        "calories": 46,
+        "protein": 1,
+        "fat": 2,
+        "carbs": 6,
+    },
+    "Hard Cooked Eggs": {
+        "calories": 44,
+        "protein": 4,
+        "fat": 3,
+        "carbs": 0,
+    },
+    "Cheese Pizza": {
+        "calories": 73,
+        "protein": 3,
+        "fat": 2,
+        "carbs": 10,
+    },
+    "Vegan Mexican Rice": {
+        "calories": 42,
+        "protein": 2,
+        "fat": 1,
+        "carbs": 7,
+    },
+    "Halal Chicken": {
+        "calories": 60,
+        "protein": 9,
+        "fat": 3,
+        "carbs": 0,
+    },
+    "Jasmine Rice": {
+        "calories": 11,
+        "protein": 0,
+        "fat": 0,
+        "carbs": 3,
+    },
+    "Green Apple": {
+        "calories": 100,
+        "protein": 0,
+        "fat": 0,
+        "carbs": 25,
     },
 }
 
