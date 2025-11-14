@@ -976,6 +976,7 @@ select:focus{
     }
     #macro-container{
         padding-bottom: 0px;
+        height: 350px;
     }
     #spartanLogo{
         width: 100px;
