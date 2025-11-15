@@ -1,14 +1,29 @@
 {% extends 'msuTracking/layout.html' %}
 
 {% block body %}
-    <div class="signup">
-        <h1 class="signup-title">Sign-Up</h1>
-        <form action="{% url 'signup' %}" method="post">
-            {% csrf_token %}
-            <input type="text" name="username" placeholder="Username">
-            <input type="password" name="password1" placeholder="Password">
-            <input type="password" name="password2" placeholder="Confirm Password">
-            <input id="signupSubmit" type="submit" value="Submit">
-        </form>
-    </div>
+    <section class="auth-page">
+        <div class="signup auth-card">
+            <div class="auth-card-header">
+                <p class="auth-badge">Create Account</p>
+                <h1 class="signup-title">Join MSUtrition</h1>
+                <p class="auth-subtitle">Set your goals, log meals, and watch the trends shift in your favor.</p>
+            </div>
+            <form class="auth-form" action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+                <label class="auth-label" for="signup-username">Username</label>
+                <input id="signup-username" type="text" name="username" placeholder="Choose a username" autocomplete="username">
+
+                <label class="auth-label" for="signup-password1">Password</label>
+                <input id="signup-password1" type="password" name="password1" placeholder="Create a password" autocomplete="new-password">
+
+                <label class="auth-label" for="signup-password2">Confirm Password</label>
+                <input id="signup-password2" type="password" name="password2" placeholder="Confirm your password" autocomplete="new-password">
+
+                <button id="signupSubmit" type="submit">Sign Up</button>
+            </form>
+            <div class="auth-links">
+                <p>Already have an account? <a href="{% url 'login' %}">Log In</a></p>
+            </div>
+        </div>
+    </section>
 {% endblock %}

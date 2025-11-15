@@ -1,16 +1,30 @@
 {% extends 'msuTracking/layout.html' %}
 
 {% block body %}
-    <div class="signup">
-        <h1 class="signup-title">Log In</h1>
-        <form action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-            <input type="text" name="username" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
-            <input id="signupSubmit" type="submit" value="Submit">
-            {% if form.errors %}
-                <p class="error">{{ form.non_field_errors.0 }}</p>
-            {% endif %}
-        </form>
-    </div>
+    <section class="auth-page">
+        <div class="signup auth-card">
+            <div class="auth-card-header">
+                <p class="auth-badge">MSUtrition</p>
+                <h1 class="signup-title">Log In</h1>
+                <p class="auth-subtitle">Pick up right where you left off with your daily nutrition plan.</p>
+            </div>
+            <form class="auth-form" action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <label class="auth-label" for="login-username">Username</label>
+                <input id="login-username" type="text" name="username" placeholder="Enter your username" autocomplete="username">
+
+                <label class="auth-label" for="login-password">Password</label>
+                <input id="login-password" type="password" name="password" placeholder="Enter your password" autocomplete="current-password">
+
+                <button id="signupSubmit" type="submit">Log In</button>
+                {% if form.errors %}
+                    <p class="error-text">{{ form.non_field_errors.0 }}</p>
+                {% endif %}
+            </form>
+            <div class="auth-links">
+                <p>Need an account? <a href="{% url 'signup' %}">Create one</a></p>
+                <a class="auth-mobile-logout" href="{% url 'logout' %}">Log Out</a>
+            </div>
+        </div>
+    </section>
 {% endblock %}
