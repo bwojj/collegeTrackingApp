@@ -1076,7 +1076,7 @@ select:focus{
         font-size: 10px;
     }
 }
-@media (max-width: 450px){
+@media (max-width: 550px){
     .links{
         display: none;
         width: 0%;
@@ -1126,5 +1126,10 @@ select:focus{
     }
     .stat{
         font-size: 12px;
+    }
+}
+@media (min-width: 550px){
+    .logout-pill-row{
+        display: none;
     }
 }

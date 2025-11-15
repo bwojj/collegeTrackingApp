@@ -11,10 +11,10 @@
             <form class="auth-form" action="{% url 'login' %}" method="post">
                 {% csrf_token %}
                 <label class="auth-label" for="login-username">Username</label>
-                <input id="login-username" type="text" name="username" placeholder="Enter your username" autocomplete="username">
+                <input id="login-username" type="text" name="username" autocomplete="off" placeholder="Enter your username" autocomplete="username">
 
                 <label class="auth-label" for="login-password">Password</label>
-                <input id="login-password" type="password" name="password" placeholder="Enter your password" autocomplete="current-password">
+                <input id="login-password" type="password" name="password" autocomplete="off" placeholder="Enter your password" autocomplete="current-password">
 
                 <button id="signupSubmit" type="submit">Log In</button>
                 {% if form.errors %}

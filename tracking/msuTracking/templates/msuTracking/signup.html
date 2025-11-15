@@ -11,13 +11,13 @@
             <form class="auth-form" action="{% url 'signup' %}" method="post">
                 {% csrf_token %}
                 <label class="auth-label" for="signup-username">Username</label>
-                <input id="signup-username" type="text" name="username" placeholder="Choose a username" autocomplete="username">
+                <input id="signup-username" type="text" name="username" autocomplete="off"v placeholder="Choose a username" autocomplete="username">
 
                 <label class="auth-label" for="signup-password1">Password</label>
-                <input id="signup-password1" type="password" name="password1" placeholder="Create a password" autocomplete="new-password">
+                <input id="signup-password1" type="password" name="password1" autocomplete="off" placeholder="Create a password" autocomplete="new-password">
 
                 <label class="auth-label" for="signup-password2">Confirm Password</label>
-                <input id="signup-password2" type="password" name="password2" placeholder="Confirm your password" autocomplete="new-password">
+                <input id="signup-password2" type="password" name="password2" autocomplete="off" placeholder="Confirm your password" autocomplete="new-password">
 
                 <button id="signupSubmit" type="submit">Sign Up</button>
             </form>
