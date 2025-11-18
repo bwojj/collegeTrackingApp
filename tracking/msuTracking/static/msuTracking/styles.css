@@ -179,7 +179,6 @@ hr{
     border: none; 
     padding: 12px 20px; 
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
 }
 .meal-container-button{
     display: flex; 
@@ -192,6 +191,11 @@ hr{
     background-color: white;
     color: #1c232a;
 }
+#addMealBtn.active{
+    background-color: white;
+    color: #1c232a;
+}
+
 .ratio{
     position: relative; 
     bottom: 40px; 
@@ -393,6 +397,10 @@ hr{
     transform: translateY(0);
     box-shadow: 0 5px 15px rgba(0,0,0,0.35);
 }
+.row.active{
+    transform: translateY(0);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.35);
+}
 .food-items .row p{
     margin: 0;
     font-size: 0.95rem;
@@ -473,6 +481,14 @@ hr{
     cursor: pointer;
 }
 #customButton:active{
+    background-color:#181d23;
+    cursor: pointer;
+}
+#submitBtn.active{
+    background-color:#181d23;
+    cursor: pointer;
+}
+#customButton.active{
     background-color:#181d23;
     cursor: pointer;
 }
@@ -732,11 +748,20 @@ select:focus{
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.35);
     transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
+#login-username, #login-password,
+    #signup-username, #signup-password1, #signup-password2{
+        font-size: 16px;
+        width: 93%;
+}
 #signupSubmit:hover{
     transform: translateY(-1px);
     box-shadow: 0 18px 28px rgba(0, 0, 0, 0.4);
 }
 #signupSubmit:active{
+    transform: translateY(1px);
+    opacity: 0.9;
+}
+#signupSubmit.active{
     transform: translateY(1px);
     opacity: 0.9;
 }
@@ -763,6 +788,9 @@ select:focus{
     color: rgba(255, 255, 255, 0.318); 
 }
 .links a:active{
+    color: white; 
+}
+.links a.active{
     color: white; 
 }
 .logout-pill-row{
@@ -827,6 +855,9 @@ select:focus{
     color: red; 
 }
 .del:active{
+    color: white; 
+}
+.del.active{
     color: white; 
 }
 #custom-food{
@@ -1135,6 +1166,14 @@ select:focus{
     }
     .stat{
         font-size: 12px;
+    }
+    #login-username, #login-password,
+    #signup-username, #signup-password1, #signup-password2{
+        font-size: 16px;
+        width: 91%;
+    }
+    #search-food, #quantity, .customs, #custom-food-name{
+        font-size: 16px;
     }
 }
 @media (min-width: 550px){

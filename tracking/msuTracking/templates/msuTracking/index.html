@@ -144,7 +144,7 @@
                 <form action="{% url 'custom' %}" method="post">
                     {% csrf_token %}
                     <div class="modal-2-top">
-                        <input type="text" name="food" placeholder="Name" autocomplete="off">
+                        <input id="custom-food-name" type="text" name="food" placeholder="Name" autocomplete="off">
                         <select id="meal" name="meal">
                             <option name="Breakfast">Breakfast</option>
                             <option name="Lunch">Lunch</option>
@@ -154,10 +154,10 @@
                     </div>
                     <div class="modal-2-bottom">
                         <div class="modal-2-bottom-top">
-                            <input type="number" name="calories" placeholder="Cals" autocomplete="off">
-                            <input type="number" name="protein" placeholder="Protein" autocomplete="off">
-                            <input type="number" name="carbs" placeholder="Carbs" autocomplete="off">
-                            <input type="number" name="fat" placeholder="Fat" autocomplete="off">
+                            <input class="customs" type="number" name="calories" placeholder="Cals" autocomplete="off">
+                            <input class="customs" type="number" name="protein" placeholder="Protein" autocomplete="off">
+                            <input class="customs" type="number" name="carbs" placeholder="Carbs" autocomplete="off">
+                            <input class="customs" type="number" name="fat" placeholder="Fat" autocomplete="off">
                         </div>
                         <div class="bottom-button">
                             <input type="submit" id="customButton" value="Add">

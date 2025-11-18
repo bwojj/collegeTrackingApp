@@ -5,6 +5,9 @@ const fullOverlay = document.querySelector('.fullOverlay');
 
 const search = document.getElementById('search-food');
 
+document.addEventListener("touchstart", ()=>{}, true);
+
+
 function macroUpdate(circle, current, goal, percentageText){
     let targetProgress = (current / goal) * 100;
     let progress = 0;

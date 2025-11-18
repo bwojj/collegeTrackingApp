@@ -111,8 +111,11 @@ def index(request):
             .order_by("order")
         )
     included_dates = Day.objects.values_list('date', flat=True)
+    print(included_dates)
     
-    dates = sorted(set([d.strftime("%Y-%m-%d") for d in included_dates]), reverse=True)
+    dates = sorted([d.strftime("%Y-%m-%d") for d in included_dates], reverse=True)
+    dates.append((datetime.datetime.today() + datetime.timedelta(days=1)).strftime("%Y-%m-%d"))
+    dates = set(dates)
 
     meal_totals = dict()
     for meal in meals:
