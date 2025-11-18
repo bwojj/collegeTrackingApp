@@ -4,6 +4,17 @@ import django.db.models.deletion
 from django.db import migrations, models
 
 
+def link_meals_to_days(apps, schema_editor):
+    Meal = apps.get_model('msuTracking', 'Meal')
+    Day = apps.get_model('msuTracking', 'Day')
+    db_alias = schema_editor.connection.alias
+
+    for meal in Meal.objects.using(db_alias).all():
+        day, _ = Day.objects.using(db_alias).get_or_create(date=meal.date_old)
+        meal.date_id = day.id
+        meal.save(update_fields=['date'])
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -28,9 +39,24 @@ class Migration(migrations.Migration):
             name='id',
             field=models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
         ),
+        migrations.RenameField(
+            model_name='meal',
+            old_name='date',
+            new_name='date_old',
+        ),
+        migrations.AddField(
+            model_name='meal',
+            name='date',
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='meals', to='msuTracking.day'),
+        ),
+        migrations.RunPython(link_meals_to_days, migrations.RunPython.noop),
         migrations.AlterField(
             model_name='meal',
             name='date',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='meals', to='msuTracking.day'),
+        ),
+        migrations.RemoveField(
+            model_name='meal',
+            name='date_old',
         ),
     ]

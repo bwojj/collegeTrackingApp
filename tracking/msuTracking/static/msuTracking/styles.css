@@ -459,11 +459,20 @@ hr{
     margin-left: 5px; 
     color: white; 
 }
-#submitBtn:hover, #customBtn:hover {
+#submitBtn:hover {
     background-color:#51a362;
     cursor: pointer;
 }
+#customButton:hover{
+    cursor: pointer;
+    background-color:#51a362;
+    color: white;
+}
 #submitBtn:active{
+    background-color:#181d23;
+    cursor: pointer;
+}
+#customButton:active{
     background-color:#181d23;
     cursor: pointer;
 }
