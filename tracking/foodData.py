@@ -1,8 +1,8 @@
 foods = {
     "Chicken": {
-        "calories": round(366 / 4),
-        "protein": round(66 / 4),
-        "fat": 0,
+        "calories": 48,
+        "protein": 9,
+        "fat": 1,
         "carbs": 0,
     },
     "Burger": {
@@ -114,9 +114,9 @@ foods = {
         "carbs": 7,
     },
     "Halal Chicken": {
-        "calories": 60,
-        "protein": 9,
-        "fat": 3,
+        "calories": 70,
+        "protein": 8,
+        "fat": 2,
         "carbs": 0,
     },
     "Jasmine Rice": {
