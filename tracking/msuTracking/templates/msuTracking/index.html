@@ -144,6 +144,7 @@
                 </div>
                 <form action="{% url 'custom' %}" method="post">
                     {% csrf_token %}
+                    <input type="hidden" name="date" value="{{ day }}">
                     <div class="modal-2-top">
                         <input id="custom-food-name" type="text" name="food" placeholder="Name" autocomplete="off">
                         <select id="meal" name="meal">
@@ -176,6 +177,7 @@
                 <div class="modal-bottom">
                     <form action="{% url 'index' %}" method="post">
                         {% csrf_token %}
+                        <input type="hidden" name="date" value="{{ day }}">
                         <div class="form-top">
                             <input type="text" name="food" id="search-food" placeholder="Food" autocomplete="off">
                             <input id="quantity" type="number" name="quantity" placeholder="Weight" autocomplete="off">

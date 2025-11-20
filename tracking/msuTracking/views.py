@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django import forms
@@ -33,6 +34,8 @@ def ensure_meals_exist(day, user):
 # Create your views here.
 @login_required
 def index(request):
+    default_date = timezone.localdate() + datetime.timedelta(days=1)
+
     if request.method == "POST":
         form = NewFoodAdd(request.POST)
 
@@ -41,13 +44,17 @@ def index(request):
             quantity = form.cleaned_data["quantity"]
             meal_name = form.cleaned_data["meal"]
             user = request.user 
+            selected_date_str = request.POST.get("date") or default_date.strftime("%Y-%m-%d")
+            selected_date = datetime.datetime.strptime(selected_date_str, "%Y-%m-%d").date()
 
             food_nutrition = {key: int(value) * quantity for key, value in foodInfo(food).items()}
+
+            
             try: 
-                date = Day.objects.get(date=timezone.localdate(), user=request.user)
+                date = Day.objects.get(date=selected_date, user=request.user)
                 ensure_meals_exist(date, request.user)
             except Day.DoesNotExist:
-                date = Day(date=timezone.localdate(), user=request.user)
+                date = Day(date=selected_date, user=request.user)
                 date.save()
 
                 ensure_meals_exist(date, request.user)
@@ -66,12 +73,13 @@ def index(request):
             meal.save()
             food_item.save()
 
-            return redirect('index')
+            return redirect(f"{reverse('index')}?date={selected_date_str}")
     
     if request.GET.get("date"):
-        selected_date = request.GET.get("date")
+        selected_date_str = request.GET.get("date")
     else:
-        selected_date = timezone.localdate().strftime("%Y-%m-%d")
+        selected_date_str = default_date.strftime("%Y-%m-%d")
+    selected_date = datetime.datetime.strptime(selected_date_str, "%Y-%m-%d").date()
     
     try:
         day = Day.objects.get(date=selected_date, user=request.user)
@@ -114,7 +122,7 @@ def index(request):
     print(included_dates)
     
     dates = sorted([d.strftime("%Y-%m-%d") for d in included_dates], reverse=True)
-    dates.append((timezone.localdate() + datetime.timedelta(days=1)).strftime("%Y-%m-%d"))
+    dates.append(default_date.strftime("%Y-%m-%d"))
     dates = set(dates)
     print(dates)
     meal_totals = dict()
@@ -143,8 +151,8 @@ def index(request):
         "foodInfo": get_foods().items(), 
         "meals": meals,
         "dates": dates, 
-        "todaysDate": timezone.localdate().strftime("%Y-%m-%d"),
-        "day": selected_date,
+        "todaysDate": default_date.strftime("%Y-%m-%d"),
+        "day": selected_date.strftime("%Y-%m-%d"),
         "totals": meal_totals,
         "total_calories": total_calories,
         "total_protein": total_protein, 
@@ -157,7 +165,7 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
+            return redirect(reverse('login'))
     else:
         form = UserCreationForm()
     return render(request, 'msuTracking/signup.html')
@@ -173,11 +181,12 @@ def delete_data(request, id):
     food = FoodData.objects.get(id=id)
 
     date = food.meal.date.date
+    date_str = date.strftime("%Y-%m-%d")
 
     food.delete()
     
     
-    return redirect(reverse('index'))
+    return redirect(f"{reverse('index')}?date={date_str}")
 
 def custom(request):
     if request.method == "POST":
@@ -190,8 +199,11 @@ def custom(request):
             protein = form.cleaned_data["protein"]
             carbs = form.cleaned_data["carbs"]
             fat = form.cleaned_data["fat"]
+            default_date = timezone.localdate() + datetime.timedelta(days=1)
+            selected_date_str = request.POST.get("date") or default_date.strftime("%Y-%m-%d")
+            selected_date = datetime.datetime.strptime(selected_date_str, "%Y-%m-%d").date()
 
-            day, created = Day.objects.get_or_create(date=timezone.localdate().strftime("%Y-%m-%d"), user=request.user)
+            day, created = Day.objects.get_or_create(date=selected_date, user=request.user)
             meal, created = Meal.objects.get_or_create(date=day, meal_name=meal_name, user=request.user)
             food = FoodData(
                 meal=meal,
@@ -203,6 +215,6 @@ def custom(request):
             )
             food.save()
 
-            return redirect(reverse('index'))
+            return redirect(f"{reverse('index')}?date={selected_date_str}")
     
     return redirect(reverse('index'))
