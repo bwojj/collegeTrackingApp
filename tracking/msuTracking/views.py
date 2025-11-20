@@ -114,9 +114,9 @@ def index(request):
     print(included_dates)
     
     dates = sorted([d.strftime("%Y-%m-%d") for d in included_dates], reverse=True)
-    dates.append((datetime.datetime.today() + datetime.timedelta(days=1)).strftime("%Y-%m-%d"))
+    dates.append((timezone.localdate() + datetime.timedelta(days=1)).strftime("%Y-%m-%d"))
     dates = set(dates)
-
+    print(dates)
     meal_totals = dict()
     for meal in meals:
         total_calories, total_protein, total_carbs, total_fat = 0, 0, 0, 0
