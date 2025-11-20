@@ -34,7 +34,8 @@ def ensure_meals_exist(day, user):
 # Create your views here.
 @login_required
 def index(request):
-    default_date = timezone.localdate() + datetime.timedelta(days=1)
+    todays_date = timezone.localdate()
+    todays_date_str = todays_date.strftime("%Y-%m-%d")
 
     if request.method == "POST":
         form = NewFoodAdd(request.POST)
@@ -44,7 +45,7 @@ def index(request):
             quantity = form.cleaned_data["quantity"]
             meal_name = form.cleaned_data["meal"]
             user = request.user 
-            selected_date_str = request.POST.get("date") or default_date.strftime("%Y-%m-%d")
+            selected_date_str = request.POST.get("date") or todays_date_str
             selected_date = datetime.datetime.strptime(selected_date_str, "%Y-%m-%d").date()
 
             food_nutrition = {key: int(value) * quantity for key, value in foodInfo(food).items()}
@@ -78,7 +79,7 @@ def index(request):
     if request.GET.get("date"):
         selected_date_str = request.GET.get("date")
     else:
-        selected_date_str = default_date.strftime("%Y-%m-%d")
+        selected_date_str = todays_date_str
     selected_date = datetime.datetime.strptime(selected_date_str, "%Y-%m-%d").date()
     
     try:
@@ -118,13 +119,11 @@ def index(request):
             )
             .order_by("order")
         )
-    included_dates = Day.objects.values_list('date', flat=True)
-    print(included_dates)
+    included_dates = Day.objects.filter(user=request.user).values_list('date', flat=True)
     
-    dates = sorted([d.strftime("%Y-%m-%d") for d in included_dates], reverse=True)
-    dates.append(default_date.strftime("%Y-%m-%d"))
-    dates = set(dates)
-    print(dates)
+    dates = {d.strftime("%Y-%m-%d") for d in included_dates}
+    dates.add(todays_date_str)
+    dates = sorted(dates, reverse=True)
     meal_totals = dict()
     for meal in meals:
         total_calories, total_protein, total_carbs, total_fat = 0, 0, 0, 0
@@ -151,7 +150,7 @@ def index(request):
         "foodInfo": get_foods().items(), 
         "meals": meals,
         "dates": dates, 
-        "todaysDate": default_date.strftime("%Y-%m-%d"),
+        "todaysDate": todays_date_str,
         "day": selected_date.strftime("%Y-%m-%d"),
         "totals": meal_totals,
         "total_calories": total_calories,
@@ -199,8 +198,8 @@ def custom(request):
             protein = form.cleaned_data["protein"]
             carbs = form.cleaned_data["carbs"]
             fat = form.cleaned_data["fat"]
-            default_date = timezone.localdate() + datetime.timedelta(days=1)
-            selected_date_str = request.POST.get("date") or default_date.strftime("%Y-%m-%d")
+            todays_date = timezone.localdate()
+            selected_date_str = request.POST.get("date") or todays_date.strftime("%Y-%m-%d")
             selected_date = datetime.datetime.strptime(selected_date_str, "%Y-%m-%d").date()
 
             day, created = Day.objects.get_or_create(date=selected_date, user=request.user)
