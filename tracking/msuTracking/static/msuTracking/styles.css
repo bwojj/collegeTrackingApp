@@ -2,10 +2,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 /* Globals */
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.app-container {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
 body{
     margin: 60px 0 0 0; 
     padding: 0; 
     background-color: #0d1217;
+    width: 100%;
 }
 h1, h2, .title {
   font-family: 'Montserrat', sans-serif;
@@ -18,6 +33,31 @@ label, option{
 body, p, li, span {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="email"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select{
+    font-size: 16px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="email"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+textarea{
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
 }
 
 /* Main Containers */
@@ -269,12 +309,13 @@ hr{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 30%;
-    height: 600px;
+    width: min(460px, 92vw);
+    max-height: 90vh;
+    height: auto;
+    padding-bottom: 24px;
     pointer-events: none;
     z-index: 20;
     border-radius: 12px;
-    min-width: 550px;
 }
 
 .modal-container.active{
@@ -329,7 +370,7 @@ hr{
     width: 100%; 
     justify-content: center;
     width: 33%;
-
+    white-space: nowrap;
 }
 .modal-head .filler{
     width: 33%;
@@ -371,7 +412,10 @@ hr{
     display: flex;
     flex-direction: column;
     gap: 14px;
-    padding: 6px 0 10px;
+    padding: 10px;
+    border: 1px solid #3a7a47;
+    border-radius: 12px;
+    margin-top: 25px;
 }
 .food-items .row{
     display: flex;
@@ -423,6 +467,20 @@ hr{
     color: #bfc3cc;
     font-size: 0.9rem;
 }
+.modal-divider{
+    width: 88%;
+    height: 1px;
+    margin: 14px auto 6px;
+    border: none;
+    background: linear-gradient(90deg, rgba(0,0,0,0), rgba(137,142,150,0.35), rgba(0,0,0,0));
+    border-radius: 999px;
+    opacity: 0.75;
+}
+.modal-divider-faint{
+    margin-top: 6px;
+    opacity: 0.45;
+    margin-bottom: 12px;
+}
 #hidden{
     display: none;
 }
@@ -434,12 +492,14 @@ hr{
     display: flex;
 }
 .modal-bottom #search-food{
-    width: 65%;
+    grid-area: food;
+    width: 100%;
     text-align: left;
 }
 .modal-bottom #quantity{
-    width: 2%;
-    text-align: right;
+    grid-area: weight;
+    width: 100%;
+    text-align: left;
 }
 .modal-bottom input, .modal-bottom select, .modal-2 select, .modal-2 input{
     background-color:#181d23; 
@@ -453,19 +513,37 @@ hr{
     outline: none; 
 }
 .modal-bottom form{
-    display: flex;
-    flex-direction: column;
-    gap: 10px; 
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 110px;
+    grid-template-areas:
+        "food food"
+        "weight add"
+        "select select";
+    gap: 12px;
     width: 90%; 
     margin: 15px auto;
+    align-items: center;
 }
-.modal-bottom #meal{
-    width: 65%;
+.modal-bottom .form-top,
+.modal-bottom .form-under{
+    display: contents;
+}
+.modal-bottom .meal-select{
+    grid-area: select;
+    width: 100%;
+    color: #6d7784;
+    background-color: #181d23;
+}
+.modal-bottom .meal-select option{
+    color: #0d1217;
 }
 .modal-bottom #submitBtn{
-    width: 20%;
-    margin-left: 5px; 
+    grid-area: add;
+    width: 100%;
+    margin-left: 0; 
     color: white; 
+    align-self: stretch;
+    justify-self: stretch;
 }
 #submitBtn:hover {
     background-color:#51a362;
@@ -497,12 +575,13 @@ hr{
     margin-right: 8px;
 }
 .modal-bottom select, .modal-2 select{
-    color: white;
+    color: inherit;
 }
 input[type="text"], input[type="number"]{
     color: white;
 }
 input[type="number"]{
+    text-align: left;
     padding-right: 30px;
 }
 input[type="number"]::-webkit-inner-spin-button,
@@ -703,6 +782,12 @@ hr{
     flex-direction: column;
     gap: 8px;
     margin-top: 30px;
+    align-items: stretch;
+}
+.modal-hr{
+    background-color: #3a7a47;
+    width: 40%; 
+    margin-top: 1px;
 }
 .auth-label{
     font-size: 13px;
@@ -727,6 +812,9 @@ hr{
 }
 .auth-form input::placeholder{
     color: #6d7784;
+}
+#quantity::placeholder{
+    text-align: left;
 }
 input:focus{
     outline: none;
@@ -873,21 +961,27 @@ select:focus{
     box-shadow: 0 8px 20px rgba(0,0,0,0.7), 
               0 0 8px rgba(0,0,0,0.5);
     position: fixed;
-    width: 30%;
+    width: min(430px, 92vw);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 300px;
+    height: auto;
+    max-height: 80vh;
     pointer-events: none;
     z-index: 30;
     border-radius: 12px;
-    gap: 10px;
-    min-width: 300px;
+    gap: 14px;
+    padding: 18px 22px 24px;
+    min-width: 320px;
+}
+#search-food{
+    width: 100%;
 }
 
 .modal-2-title{
     color: #51a362; 
     text-align: center;
+    white-space: nowrap;
 }
 .modal-2 form select{
     color: gray;
@@ -895,49 +989,48 @@ select:focus{
 .modal-2 form{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    margin-top: 15px;
+    margin-top: 8px;
     width: 100%;
-    gap: 10px;
+    gap: 14px;
 }
 .modal-2-top{
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    gap: 10px;
+    gap: 12px;
 }
 .modal-2-top input{
-    width: 85%;
+    width: 92%;
 }
 .modal-2-top select{
-    width: 91%;
+    width: 92%;
 }
 .modal-2-bottom{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: 5px;
-    gap: 15px;
+    margin-top: 2px;
+    gap: 14px;
 }
 .modal-2-bottom-top{
-    display: flex;
-    justify-content: center;
-    width: 95%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    width: 92%;
 }
 .modal-2-bottom-top input{
-    width: 12.5%;
+    width: 100%;
 }
 .bottom-button{
     display: flex;
-    width: 88%;
-    justify-content: flex-end;
+    width: 92%;
+    justify-content: center;
 }
 .bottom-button input{
-    width: 40%;
+    width: 55%;
     color: #51a362;
 }
 
@@ -1016,7 +1109,25 @@ select:focus{
     }
     .day[data-today="true"] #date{
     width: 11%;
-} 
+    } 
+    #meal-container{
+        margin-top: 8rem;
+    }
+}
+@media (max-width: 900px){
+    #meal-container{
+        margin-top: 3rem;
+    }
+}
+@media (max-width: 730px){
+    #meal-container{
+        margin-top: 1rem;
+    }
+}
+@media (max-width: 550px){
+    #meal-container{
+        margin-top: 0.3rem;
+    }
 }
 @media (max-width: 905px){
     .day[data-today="true"] #date{
@@ -1037,6 +1148,19 @@ select:focus{
     .day[data-today="true"] #date{
     width: 23%;
 } 
+}
+@media (max-width: 700px){
+    .modal-2{
+        width: 88vw;
+    }
+}
+@media (min-width: 900px){
+    .modal-container{
+        width: min(520px, 92vw);
+    }
+    .modal-2{
+        width: min(520px, 92vw);
+    }
 }
 @media (max-width: 768px){
     .auth-page{
@@ -1090,8 +1214,8 @@ select:focus{
     }
     .bodyContainer{
         display: flex;
-        flex-direction: column-reverse;
-        padding-bottom: 115px;
+        flex-direction: column;
+        padding-bottom: 30px;
     }
     #calorie-container{
         margin-top: 10px;
@@ -1107,7 +1231,7 @@ select:focus{
     }
     #addMealBtn{
         position: absolute; 
-        bottom: 52%;
+        bottom: 2%;
         right: 2rem;
     }
 }
@@ -1124,15 +1248,12 @@ select:focus{
     .meal-name{
         font-size: 16px;
     }
-    .modal-bottom #search-food{
-        width: 50%;
-    }
-    .modal-bottom #meal{
-        width: 52%;
-    }
     .modal-container{
         width: 88%;
         height: 660px;
+        overflow: hidden; /* prevents viewport shifts */
+        position: fixed;  /* prevents layout moves */
+        padding-bottom: 40px;
     }
     div.pageTitle{
        width: 100%;
@@ -1151,7 +1272,7 @@ select:focus{
     }
     #macro-container{
         padding-bottom: 0px;
-        height: 200px;
+        height: 225px;
     }
     #spartanLogo{
         width: 100px;
@@ -1174,6 +1295,15 @@ select:focus{
     }
     #search-food, #quantity, .customs, #custom-food-name{
         font-size: 16px;
+    }
+    .modal-head h1{
+        font-size: 25px;
+    }
+}
+@media (max-width: 640px){
+    a.logout-pill{
+        font-size: 10px;
+        width: 50px;
     }
 }
 @media (min-width: 550px){

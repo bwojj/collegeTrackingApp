@@ -16,6 +16,7 @@
         <div class="bodyContainer">
             <div class="vertical">
                 <form class="day" data-today="{% if day == todaysDate %}true{% else %}false{% endif %}" action="{% url 'index' %}"action="{% url 'index' %}" method="get">
+                    {% csrf_token %}
                     <select id="date" name="date" onchange="this.form.submit()">
                         {% if day == todaysDate %}
                         <option selected value="{{ todaysDate }}">Today</option>
@@ -171,6 +172,25 @@
                     <h1>Add Food</h1>
                     <span class="X" onclick="modalClose()">&times</span>
                 </div>
+                <hr class="modal-hr">
+                <div class="modal-bottom">
+                    <form action="{% url 'index' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-top">
+                            <input type="text" name="food" id="search-food" placeholder="Food" autocomplete="off">
+                            <input id="quantity" type="number" name="quantity" placeholder="Weight" autocomplete="off">
+                        </div>
+                        <div class="form-under">
+                            <select id="meal" name="meal" class="meal-select" aria-label="Meal">
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Pre-Lift">Pre-Lift</option>
+                                <option value="Dinner">Dinner</option>
+                            </select>
+                            <input id="submitBtn" type="submit" name="submit" value="Add">
+                        </div>
+                    </form>
+                </div>
                 <div class="food-items" id="food-list">
                     <div class="row" id="custom-food" onclick="customModalOpen()">
                         <p class="custom">Custom Food</p>
@@ -186,26 +206,6 @@
                                 </div>
                             </div>
                         {% endfor %}
-                </div>
-                <div class="modal-bottom">
-                    <form action="{% url 'index' %}" method="post">
-                        {% csrf_token %}
-                        <div class="form-top">
-                            <input type="text" name="food" id="search-food" placeholder="Food" autocomplete="off">
-                            <label for="quantity">Weight</label>
-                            <input id="quantity" type="number" name="quantity" placeholder="#" autocomplete="off">
-                        </div>
-                        <div class="form-under">
-                            <label for="meal">Meal</label>
-                            <select id="meal" name="meal">
-                                <option name="Breakfast">Breakfast</option>
-                                <option name="Lunch">Lunch</option>
-                                <option name="Lunch">Pre-Lift</option>
-                                <option name="Dinner">Dinner</option>
-                            </select>
-                            <input id="submitBtn" type="submit" name="submit" value="Add">
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

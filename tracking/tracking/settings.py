@@ -146,6 +146,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.ngrok-free.app",
     "https://*.ngrok-free.dev",
     "https://*.ngrok.io",
+    "https://msu-nutrition-tracking.onrender.com",
 ]
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
