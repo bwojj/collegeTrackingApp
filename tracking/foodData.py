@@ -114,10 +114,28 @@ foods = {
         "carbs": 7,
     },
     "Halal Chicken": {
-        "calories": 70,
-        "protein": 8,
-        "fat": 2,
+        "calories": 40,
+        "protein": 5,
+        "fat": 3,
         "carbs": 0,
+    },
+    "Halal Beef": {
+        "calories": 55,
+        "protein": 8,
+        "fat": 3,
+        "carbs": 0,
+    },
+    "Herb Roasted Turkey": {
+        "calories": 35,
+        "protein": 5,
+        "fat": 1,
+        "carbs": 0,
+    },
+    "Grapes": {
+        "calories": 20,
+        "protein": 0,
+        "fat": 0,
+        "carbs": 5,
     },
     "Jasmine Rice": {
         "calories": 48,
