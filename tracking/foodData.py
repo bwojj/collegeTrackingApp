@@ -59,6 +59,12 @@ foods = {
         "fat": 1,
         "carbs": 14,
     },
+    "White Cheddar Rice Cakes": {
+        "calories": 60,
+        "protein": 0,
+        "fat": 2,
+        "carbs": 9,
+    },
     "Caramel Rice Cakes": {
         "calories": 57,
         "protein": 0,
@@ -148,6 +154,18 @@ foods = {
         "protein": 0,
         "fat": 0,
         "carbs": 25,
+    },
+    "Honey": {
+        "calories": 15,
+        "protein": 0,
+        "fat": 0,
+        "carbs": 4,
+    },
+    "Ramen": {
+        "calories": 260,
+        "protein": 5,
+        "fat": 14,
+        "carbs": 32,
     },
 }
 
