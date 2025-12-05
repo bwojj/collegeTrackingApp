@@ -120,9 +120,9 @@ foods = {
         "carbs": 7,
     },
     "Halal Chicken": {
-        "calories": 40,
-        "protein": 5,
-        "fat": 3,
+        "calories": 76,
+        "protein": 6,
+        "fat": 6.5,
         "carbs": 0,
     },
     "Halal Beef": {
